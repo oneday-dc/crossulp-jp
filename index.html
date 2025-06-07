@@ -4,224 +4,356 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>커넥팀 (Connecteam) - 당신의 가치에 맞는 팀을 찾으세요</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- Global Styles --- */
+        /* --- 1. Global Styles & Design System --- */
         :root {
-            --primary-color: #4A90E2; /* 신뢰감 있는 파란색 */
-            --secondary-color: #F5A623; /* 따뜻한 주황색 */
-            --dark-text: #333;
-            --light-text: #777;
-            --bg-color: #F8F9FA;
-            --border-color: #EAECEF;
+            --primary-blue: #2B6CB0; /* Deep Blue for Trust */
+            --accent-mint: #38B2AC; /* Mint for Growth & Connection */
+            --dark-navy: #1A202C; /* Main Text Color */
+            --medium-gray: #718096; /* Sub Text */
+            --light-gray: #EDF2F7; /* Background */
+            --border-color: #E2E8F0;
+            --white: #FFFFFF;
+            --success-color: #48BB78;
         }
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background-color: var(--bg-color);
-            color: var(--dark-text);
+            padding: 0;
         }
+
+        body {
+            font-family: 'IBM Plex Sans KR', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-navy);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
-        button {
+
+        button, .btn {
             cursor: pointer;
             border: none;
             border-radius: 8px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 16px;
             font-weight: 600;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
+
         .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: var(--primary-blue);
+            color: var(--white);
         }
         .btn-primary:hover {
-            background-color: #357ABD;
+            background-color: #2C5282;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
         }
+
         .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
+            background-color: var(--accent-mint);
+            color: var(--white);
         }
         .btn-secondary:hover {
-            background-color: #D9901A;
+            background-color: #2C7A7B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 178, 172, 0.2);
         }
-        .hidden { display: none !important; }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
 
-        /* --- Header --- */
+        .hidden { display: none !important; }
+        
+        .page {
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            padding: 48px;
+        }
+        
+        /* --- SVG Icons --- */
+        .icon {
+            width: 1em;
+            height: 1em;
+            stroke-width: 2;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* --- 2. Header --- */
         header {
-            background-color: white;
-            padding: 15px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px 0;
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(8px);
         }
+
         .header-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--primary-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-blue);
             cursor: pointer;
-        }
-        .auth-buttons button { margin-left: 10px; }
-
-        /* --- Main Content --- */
-        main { padding: 40px 0; }
-        .page {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-decoration: none;
         }
 
-        /* --- Landing Page --- */
-        #landing-page .hero {
-            text-align: center;
-            padding: 60px 0;
+        .auth-buttons .btn { margin-left: 12px; }
+        #user-greeting { display: flex; align-items: center; gap: 16px; font-weight: 500; }
+
+        /* --- 3. Page Styles --- */
+        main { padding: 48px 0; }
+        
+        /* Landing Page */
+        #landing-page { padding: 0; }
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            padding: 60px;
         }
-        #landing-page h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
+        .hero-content h1 {
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 24px;
         }
-        #landing-page .highlight { color: var(--primary-color); }
-        #landing-page p {
+        .hero-content .highlight { color: var(--accent-mint); }
+        .hero-content p {
             font-size: 18px;
-            color: var(--light-text);
-            max-width: 600px;
-            margin: 0 auto 30px;
+            color: var(--medium-gray);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+        .hero-image-wrapper img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
 
-        /* --- Job Listings Page --- */
-        #job-listings-page .search-filter-bar {
+        /* Job Listings Page */
+        #job-listings-page h2 { font-size: 36px; margin-bottom: 32px; text-align: center; }
+        .search-filter-bar {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 40px;
+            background-color: var(--light-gray);
+            padding: 16px;
+            border-radius: 12px;
         }
-        #job-listings-page .search-filter-bar input,
-        #job-listings-page .search-filter-bar select {
+        .search-filter-bar input, .search-filter-bar select {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             font-size: 16px;
+            font-family: 'IBM Plex Sans KR', sans-serif;
+        }
+        .job-list-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
         }
         .job-card {
-            background-color: #fff;
+            background-color: var(--white);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 24px;
             cursor: pointer;
-            transition: box-shadow 0.2s, transform 0.2s;
+            transition: all 0.3s ease;
         }
         .job-card:hover {
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: var(--primary-blue);
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(43, 108, 176, 0.1);
         }
-        .job-card h3 { margin: 0 0 10px; }
-        .job-card .company-name { font-weight: 600; color: var(--light-text); }
-        .job-card .location { margin-top: 10px; color: #999; }
+        .job-card h3 { 
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-navy);
+        }
+        .job-card .company-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--medium-gray);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        .job-card .location-info {
+             display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--medium-gray);
+            font-size: 14px;
+        }
         
-        /* --- Job Details Page --- */
-        #job-details-page .job-header h2 { margin-bottom: 5px; }
-        #job-details-page .job-header p { margin: 0 0 20px; font-size: 18px; color: var(--light-text); }
-        #job-details-page .job-section { margin-top: 30px; }
-        #job-details-page .job-section h4 { border-left: 4px solid var(--primary-color); padding-left: 10px; margin-bottom: 15px; }
-        #job-details-page .job-section ul { padding-left: 20px; }
-        #job-details-page .apply-button-wrapper { text-align: center; margin-top: 40px; }
+        /* Job Details Page */
+        #job-details-page .job-header { text-align: center; margin-bottom: 48px; }
+        #job-details-page .job-header h2 { font-size: 40px; margin-bottom: 8px; }
+        #job-details-page .job-header p { font-size: 20px; color: var(--medium-gray); }
+        .job-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 48px;
+        }
+        .job-section h4 { 
+            font-size: 22px; 
+            margin-bottom: 16px; 
+            padding-bottom: 8px; 
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .job-section ul { list-style-position: inside; padding-left: 8px; line-height: 1.8; color: var(--medium-gray); }
+        .job-summary-card {
+            background-color: var(--light-gray);
+            padding: 24px;
+            border-radius: 12px;
+        }
+        .job-summary-card .apply-button-wrapper { margin-top: 24px; }
+        .job-summary-card .apply-button-wrapper button { width: 100%; }
 
-        /* --- Auth Modals --- */
+        /* Auth Modals */
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(26, 32, 44, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
         }
         .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 400px;
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            width: 420px;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
         }
-        .modal-content h2 { margin-top: 0; }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-content h2 { text-align: center; font-size: 28px; margin-bottom: 24px; }
         .modal-content .form-group { margin-bottom: 20px; }
-        .modal-content label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .modal-content label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
         .modal-content input, .modal-content select, .modal-content textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            box-sizing: border-box;
+            font-size: 16px;
         }
-        .modal-content button { width: 100%; }
-        
-        /* --- Dashboard --- */
+        .modal-content button { width: 100%; margin-top: 10px; }
+
+        /* Dashboard */
         #company-dashboard-page .dashboard-grid {
             display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 30px;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            align-items: flex-start;
         }
-        .dashboard-nav ul { list-style: none; padding: 0; }
+        .dashboard-nav { background-color: white; border-radius: 12px; padding: 16px; }
+        .dashboard-nav ul { list-style: none; }
         .dashboard-nav li {
-            padding: 15px;
+            padding: 16px;
             cursor: pointer;
             border-radius: 8px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
         }
-        .dashboard-nav li.active, .dashboard-nav li:hover {
-            background-color: #E9F1FA;
-            color: var(--primary-color);
+        .dashboard-nav li:hover { background-color: var(--light-gray); }
+        .dashboard-nav li.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
         }
-        .dashboard-content h2 { margin-top: 0; }
-        #post-new-job-form button { margin-top: 20px; }
+        #dashboard-tab-content h2 { font-size: 32px; margin-bottom: 24px; }
+        #post-new-job-form button { margin-top: 24px; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="container header-nav">
-            <div class="logo">Connecteam</div>
+            <a href="#" class="logo">Connecteam</a>
             <div id="auth-buttons" class="auth-buttons">
-                <button id="login-btn">로그인</button>
+                <button id="login-btn" class="btn-outline">로그인</button>
                 <button id="signup-btn" class="btn-primary">회원가입</button>
             </div>
             <div id="user-greeting" class="hidden">
-                <span id="user-name"></span>님 환영합니다!
-                <button id="dashboard-btn" class="hidden">기업 대시보드</button>
-                <button id="logout-btn" style="margin-left: 10px;">로그아웃</button>
+                <span id="user-name"></span>님, 좋은 기회를 찾아보세요!
+                <button id="dashboard-btn" class="btn-secondary hidden">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    기업 대시보드
+                </button>
+                <button id="logout-btn" class="btn-outline">로그아웃</button>
             </div>
         </div>
     </header>
 
     <main class="container">
-        <!-- 각 페이지는 이 안에 렌더링 됩니다 -->
         <div id="page-container"></div>
     </main>
 
-    <!-- 회원가입 모달 -->
-    <div id="signup-modal" class="modal hidden">
+    <!-- Modals -->
+    <div id="signup-modal" class="modal">
         <div class="modal-content">
-            <h2>회원가입</h2>
+            <span style="cursor:pointer; float:right; font-size:24px; color:#aaa;" class="close-modal">×</span>
+            <h2>커넥팀 시작하기</h2>
             <form id="signup-form">
                 <div class="form-group">
                     <label for="signup-type">가입 유형</label>
-                    <select id="signup-type" required>
-                        <option value="talent">인재 (구직자)</option>
-                        <option value="company">기업</option>
-                    </select>
+                    <select id="signup-type" required><option value="talent">인재 (구직자)</option><option value="company">기업</option></select>
                 </div>
                 <div class="form-group">
                     <label for="signup-email">이메일</label>
@@ -236,9 +368,9 @@
         </div>
     </div>
 
-    <!-- 로그인 모달 -->
-    <div id="login-modal" class="modal hidden">
+    <div id="login-modal" class="modal">
         <div class="modal-content">
+             <span style="cursor:pointer; float:right; font-size:24px; color:#aaa;" class="close-modal">×</span>
             <h2>로그인</h2>
             <form id="login-form">
                 <div class="form-group">
@@ -253,7 +385,6 @@
             </form>
         </div>
     </div>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -273,54 +404,72 @@
             };
 
             let currentUser = null;
+            
+            // --- 아이콘 SVG ---
+            const ICONS = {
+                company: `<svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>`,
+                location: `<svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
+                briefcase: `<svg class="icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
+                check: `<svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+                clipboard: `<svg class="icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>`,
+                plus: `<svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`
+            };
 
-            // --- 2. 라우터 및 페이지 렌더링 ---
+            // --- 2. 라우터 및 페이지 템플릿 ---
             const pageContainer = document.getElementById('page-container');
 
             const pages = {
                 landing: `
                     <div id="landing-page" class="page">
-                        <div class="hero">
-                            <h1>당신의 <span class="highlight">가치</span>에 맞는<br>팀을 찾으세요</h1>
-                            <p>커넥팀은 스펙을 넘어, 당신의 성향과 성장 가능성을 보고 최고의 팀을 연결합니다.</p>
-                            <button id="view-jobs-btn" class="btn-secondary">채용공고 둘러보기</button>
+                        <div class="hero-section">
+                            <div class="hero-content">
+                                <h1>당신의 <span class="highlight">가치</span>에 맞는<br>최고의 팀을 만나보세요</h1>
+                                <p>커넥팀은 스펙을 넘어, 당신의 성향과 성장 가능성을 보고 최고의 팀을 연결하는 인재 매칭 플랫폼입니다.</p>
+                                <button id="view-jobs-btn" class="btn btn-secondary">
+                                    내게 맞는 공고 찾기
+                                    <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                            </div>
+                            <div class="hero-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80" alt="팀원들이 협업하는 이미지">
+                            </div>
                         </div>
                     </div>
                 `,
                 jobListings: `
-                    <div id="job-listings-page" class="page">
-                        <h2>전체 채용공고</h2>
+                    <div id="job-listings-page">
+                        <h2>나에게 맞는 기회를 탐색해보세요</h2>
                         <div class="search-filter-bar">
                             <input type="text" id="search-keyword" placeholder="직무, 회사, 기술 스택으로 검색">
-                            <select id="filter-location">
-                                <option value="">모든 지역</option>
-                                <option value="서울">서울</option>
-                                <option value="부산">부산</option>
-                            </select>
+                            <select id="filter-location"><option value="">모든 지역</option><option value="서울">서울</option><option value="부산">부산</option></select>
                         </div>
-                        <div id="job-list-container"></div>
+                        <div id="job-list-container" class="job-list-container"></div>
                     </div>
                 `,
                 jobDetails: (job) => `
                     <div id="job-details-page" class="page">
                         <div class="job-header">
                             <h2>${job.title}</h2>
-                            <p>${job.companyName} - ${job.location}</p>
+                            <p>${job.companyName} · ${job.location}</p>
                         </div>
-                        <div class="job-section">
-                            <h4>주요업무</h4>
-                            <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
-                        </div>
-                        <div class="job-section">
-                            <h4>자격요건</h4>
-                            <ul>${job.qualifications.map(q => `<li>${q}</li>`).join('')}</ul>
-                        </div>
-                        <div class="job-section">
-                            <h4>회사소개</h4>
-                            <p>${job.description}</p>
-                        </div>
-                        <div class="apply-button-wrapper">
-                            <button class="btn-primary" id="apply-now-btn" data-job-id="${job.id}">즉시 지원하기</button>
+                        <div class="job-content-grid">
+                            <div class="job-main-content">
+                                <div class="job-section">
+                                    <h4>${ICONS.briefcase} 주요업무</h4>
+                                    <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
+                                </div>
+                                <div class="job-section" style="margin-top:32px;">
+                                    <h4>${ICONS.check} 자격요건</h4>
+                                    <ul>${job.qualifications.map(q => `<li>${q}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                            <aside class="job-summary-card">
+                                <h4>${ICONS.company} 회사소개</h4>
+                                <p style="color:var(--medium-gray); font-size:15px; margin-top:12px;">${job.description}</p>
+                                <div class="apply-button-wrapper">
+                                    <button class="btn btn-primary" id="apply-now-btn" data-job-id="${job.id}">즉시 지원하기</button>
+                                </div>
+                            </aside>
                         </div>
                     </div>
                 `,
@@ -329,8 +478,8 @@
                         <div class="dashboard-grid">
                             <nav class="dashboard-nav">
                                 <ul>
-                                    <li class="active" data-tab="my-jobs">공고 관리</li>
-                                    <li data-tab="post-job">새 공고 등록</li>
+                                    <li class="active" data-tab="my-jobs">${ICONS.clipboard} 공고 관리</li>
+                                    <li data-tab="post-job">${ICONS.plus} 새 공고 등록</li>
                                 </ul>
                             </nav>
                             <div class="dashboard-content page">
@@ -345,37 +494,22 @@
                 myJobs: (user) => `
                     <div id="my-job-listings">
                         <h2>등록한 채용공고</h2>
-                        <!-- 기업이 등록한 공고가 여기에 표시됩니다 -->
                     </div>
                 `,
                 postJob: `
                     <div id="post-new-job-form">
                         <h2>새 공고 등록</h2>
-                        <div class="form-group">
-                            <label>공고 제목</label>
-                            <input type="text" id="new-job-title" required>
-                        </div>
-                        <div class="form-group">
-                            <label>근무 지역</label>
-                            <input type="text" id="new-job-location" required>
-                        </div>
-                        <div class="form-group">
-                            <label>주요 업무 (쉼표로 구분)</label>
-                            <textarea id="new-job-res" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>자격 요건 (쉼표로 구분)</label>
-                            <textarea id="new-job-qual" rows="3"></textarea>
-                        </div>
-                         <div class="form-group">
-                            <label>상세 설명</label>
-                            <textarea id="new-job-desc" rows="5"></textarea>
-                        </div>
-                        <button id="submit-new-job-btn" class="btn-primary">공고 등록하기</button>
+                        <div class="form-group"><label>공고 제목</label><input type="text" id="new-job-title" required></div>
+                        <div class="form-group"><label>근무 지역</label><input type="text" id="new-job-location" required></div>
+                        <div class="form-group"><label>주요 업무 (쉼표로 구분)</label><textarea id="new-job-res" rows="3"></textarea></div>
+                        <div class="form-group"><label>자격 요건 (쉼표로 구분)</label><textarea id="new-job-qual" rows="3"></textarea></div>
+                         <div class="form-group"><label>상세 설명</label><textarea id="new-job-desc" rows="5"></textarea></div>
+                        <button id="submit-new-job-btn" class="btn btn-primary">공고 등록하기</button>
                     </div>
                 `
             };
 
+            // --- 라우팅 및 렌더링 로직 (이전과 동일) ---
             function renderPage(pageName, data) {
                 if (typeof pages[pageName] === 'function') {
                     pageContainer.innerHTML = pages[pageName](data);
@@ -395,7 +529,6 @@
                 bindDashboardTabEvents(tabName, user);
             }
 
-            // --- 3. 이벤트 바인딩 ---
             function bindPageEvents(pageName) {
                 if (pageName === 'landing') {
                     document.getElementById('view-jobs-btn').addEventListener('click', () => renderPage('jobListings'));
@@ -413,9 +546,10 @@
                     renderDashboardTab('myJobs', user); // 기본 탭
                     document.querySelectorAll('.dashboard-nav li').forEach(li => {
                         li.addEventListener('click', (e) => {
+                            const targetLi = e.target.closest('li');
                             document.querySelector('.dashboard-nav li.active').classList.remove('active');
-                            e.target.classList.add('active');
-                            renderDashboardTab(e.target.dataset.tab, user);
+                            targetLi.classList.add('active');
+                            renderDashboardTab(targetLi.dataset.tab, user);
                         });
                     });
                 }
@@ -430,9 +564,7 @@
                 }
             }
 
-            // --- 4. 핵심 로직 함수들 ---
-
-            // 채용공고 리스트 렌더링
+            // --- 핵심 로직 함수들 (UI 부분만 수정) ---
             function renderJobList() {
                 const container = document.getElementById('job-list-container');
                 const keyword = document.getElementById('search-keyword').value.toLowerCase();
@@ -445,19 +577,24 @@
                 });
 
                 if (filteredJobs.length === 0) {
-                    container.innerHTML = '<p>조건에 맞는 채용공고가 없습니다.</p>';
+                    container.innerHTML = '<p style="text-align:center; color: var(--medium-gray);">조건에 맞는 채용공고가 없습니다.</p>';
                     return;
                 }
 
                 container.innerHTML = filteredJobs.map(job => `
                     <div class="job-card" data-job-id="${job.id}">
                         <h3>${job.title}</h3>
-                        <p class="company-name">${job.companyName}</p>
-                        <p class="location">${job.location}</p>
+                        <div class="company-info">
+                            ${ICONS.company}
+                            <span>${job.companyName}</span>
+                        </div>
+                        <div class="location-info">
+                            ${ICONS.location}
+                            <span>${job.location}</span>
+                        </div>
                     </div>
                 `).join('');
 
-                // 각 카드에 클릭 이벤트 추가
                 document.querySelectorAll('.job-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const jobId = parseInt(card.dataset.jobId, 10);
@@ -467,28 +604,28 @@
                 });
             }
             
-            // 내 채용공고 렌더링 (대시보드용)
             function renderMyJobList(companyId) {
                 const container = document.getElementById('my-job-listings');
                 const myJobs = db.jobs.filter(job => job.companyId === companyId);
+                let content = '<h2>등록한 채용공고</h2>';
                  if (myJobs.length === 0) {
-                    container.innerHTML += '<p>아직 등록한 공고가 없습니다.</p>';
-                    return;
+                    content += '<p style="color: var(--medium-gray); margin-top:16px;">아직 등록한 공고가 없습니다.</p>';
+                } else {
+                    content += myJobs.map(job => `
+                         <div class="job-card" style="margin-top:16px;">
+                            <h3>${job.title}</h3>
+                            <div class="location-info">${ICONS.location}<span>${job.location}</span></div>
+                        </div>
+                    `).join('');
                 }
-                container.innerHTML += myJobs.map(job => `
-                     <div class="job-card">
-                        <h3>${job.title}</h3>
-                        <p class="location">${job.location}</p>
-                    </div>
-                `).join('');
+                container.innerHTML = content;
             }
-
-
-            // 지원하기
+            
+            // Apply, PostJob 핸들러는 이전과 동일
             function handleApply(e) {
                 if (!currentUser) {
                     alert('로그인이 필요합니다.');
-                    loginModal.classList.remove('hidden');
+                    loginModal.classList.add('active');
                     return;
                 }
                 if (currentUser.type !== 'talent') {
@@ -496,113 +633,81 @@
                     return;
                 }
                 const jobId = parseInt(e.target.dataset.jobId, 10);
-                
-                // 중복 지원 방지
                 const alreadyApplied = db.applications.find(app => app.userId === currentUser.id && app.jobId === jobId);
                 if(alreadyApplied) {
                     alert('이미 지원한 공고입니다.');
                     return;
                 }
-
                 db.applications.push({ userId: currentUser.id, jobId: jobId, date: new Date() });
                 alert('지원이 완료되었습니다!');
-                console.log('현재 지원 현황:', db.applications);
             }
-            
-            // 새 공고 등록
             function handlePostNewJob(user) {
                 const newJob = {
                     id: db.jobs.length + 1,
-                    companyId: user.id,
-                    companyName: user.name,
+                    companyId: user.id, companyName: user.name,
                     title: document.getElementById('new-job-title').value,
                     location: document.getElementById('new-job-location').value,
                     responsibilities: document.getElementById('new-job-res').value.split(',').map(s => s.trim()),
                     qualifications: document.getElementById('new-job-qual').value.split(',').map(s => s.trim()),
                     description: document.getElementById('new-job-desc').value,
                 };
-                
                 if(!newJob.title || !newJob.location) {
                     alert('공고 제목과 근무 지역은 필수입니다.');
                     return;
                 }
-                
                 db.jobs.push(newJob);
                 alert('새로운 공고가 등록되었습니다.');
-                
-                // 폼 초기화 및 탭 전환
                 document.querySelector('.dashboard-nav li[data-tab="my-jobs"]').click();
             }
 
-            // --- 5. 인증 및 모달 관련 ---
+            // --- 인증 및 모달 로직 (UI Class 변경) ---
             const signupModal = document.getElementById('signup-modal');
             const loginModal = document.getElementById('login-modal');
 
-            // 모달 열기/닫기
-            document.getElementById('signup-btn').addEventListener('click', () => signupModal.classList.remove('hidden'));
-            document.getElementById('login-btn').addEventListener('click', () => loginModal.classList.remove('hidden'));
+            document.getElementById('signup-btn').addEventListener('click', () => signupModal.classList.add('active'));
+            document.getElementById('login-btn').addEventListener('click', () => loginModal.classList.add('active'));
 
-            [signupModal, loginModal].forEach(modal => {
+            document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.add('hidden');
+                    if (e.target === modal || e.target.classList.contains('close-modal')) {
+                        modal.classList.remove('active');
                     }
                 });
             });
 
-            // 회원가입 처리
+            // 회원가입/로그인/로그아웃/UI 업데이트 함수는 이전과 동일
             document.getElementById('signup-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const type = document.getElementById('signup-type').value;
                 const email = document.getElementById('signup-email').value;
                 const password = document.getElementById('signup-password').value;
-
-                if (db.users.find(u => u.email === email)) {
-                    alert('이미 사용 중인 이메일입니다.');
-                    return;
-                }
-                
-                const newUser = {
-                    id: db.users.length + 1,
-                    email,
-                    password,
-                    type,
-                    name: type === 'talent' ? '새로운 인재' : '새로운 기업' // 임시 이름
-                };
+                if (db.users.find(u => u.email === email)) { alert('이미 사용 중인 이메일입니다.'); return; }
+                const newUser = { id: db.users.length + 1, email, password, type, name: type === 'talent' ? '새로운 인재' : '새로운 기업' };
                 db.users.push(newUser);
                 alert('회원가입이 완료되었습니다! 로그인해주세요.');
-                console.log('현재 유저 목록:', db.users);
-                signupModal.classList.add('hidden');
-                loginModal.classList.remove('hidden');
+                signupModal.classList.remove('active');
+                loginModal.classList.add('active');
             });
-            
-            // 로그인 처리
             document.getElementById('login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const email = document.getElementById('login-email').value;
                 const password = document.getElementById('login-password').value;
-
                 const user = db.users.find(u => u.email === email && u.password === password);
-
                 if (user) {
                     currentUser = user;
                     updateAuthState();
-                    loginModal.classList.add('hidden');
+                    loginModal.classList.remove('active');
                     alert(`${user.name}님, 환영합니다!`);
-                    renderPage('landing'); // 로그인 후 랜딩 페이지로
+                    renderPage('landing');
                 } else {
                     alert('이메일 또는 비밀번호가 일치하지 않습니다.');
                 }
             });
-
-            // 로그아웃 처리
             document.getElementById('logout-btn').addEventListener('click', () => {
                 currentUser = null;
                 updateAuthState();
                 renderPage('landing');
             });
-
-            // 로그인 상태 UI 업데이트
             function updateAuthState() {
                 if (currentUser) {
                     document.getElementById('auth-buttons').classList.add('hidden');
@@ -618,17 +723,12 @@
                     document.getElementById('user-greeting').classList.add('hidden');
                 }
             }
-            
-            // 대시보드 버튼
             document.getElementById('dashboard-btn').addEventListener('click', () => renderPage('companyDashboard'));
-
-            // 로고 클릭
-            document.querySelector('.logo').addEventListener('click', () => renderPage('landing'));
+            document.querySelector('.logo').addEventListener('click', (e) => { e.preventDefault(); renderPage('landing'); });
 
             // --- 초기 페이지 로드 ---
             renderPage('landing');
         });
     </script>
-
 </body>
 </html>
