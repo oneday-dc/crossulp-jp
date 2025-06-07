@@ -1,683 +1,634 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrossU - クローンサイト</title>
+    <title>커넥팀 (Connecteam) - 당신의 가치에 맞는 팀을 찾으세요</title>
     <style>
-        /* === 글로벌 스타일 및 리셋 === */
+        /* --- Global Styles --- */
         :root {
-            --primary-blue: #0055ff;
-            --dark-text: #1a1a1a;
-            --light-gray: #f7f7f7;
-            --border-color: #e6e6e6;
+            --primary-color: #4A90E2; /* 신뢰감 있는 파란색 */
+            --secondary-color: #F5A623; /* 따뜻한 주황색 */
+            --dark-text: #333;
+            --light-text: #777;
+            --bg-color: #F8F9FA;
+            --border-color: #EAECEF;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
             color: var(--dark-text);
-            background-color: #fff;
-            line-height: 1.6;
         }
-
         .container {
-            width: 100%;
-            max-width: 1140px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 20px;
-            padding-right: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-
-        section {
-            padding: 100px 0;
-        }
-
-        h1, h2, h3 {
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        h1 { font-size: 48px; }
-        h2 { font-size: 40px; }
-        h3 { font-size: 24px; }
-
-        p {
-            margin-top: 16px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--primary-blue);
-            transition: opacity 0.3s;
-        }
-        a:hover { opacity: 0.8; }
-
-        .button {
-            display: inline-block;
-            padding: 12px 24px;
+        button {
+            cursor: pointer;
+            border: none;
             border-radius: 8px;
-            font-weight: 700;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #357ABD;
+        }
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #D9901A;
+        }
+        .hidden { display: none !important; }
 
-        .button-primary {
-            background-color: var(--primary-blue);
-            color: #fff;
-        }
-        
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 85, 255, 0.3);
-        }
-
-        /* === 내비게이션 바 (상단바) === */
-        .navbar {
+        /* --- Header --- */
+        header {
+            background-color: white;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
-            width: 100%;
-            padding: 20px 0;
-            background-color: transparent;
-            z-index: 1000;
-            transition: background-color 0.4s, box-shadow 0.4s;
+            z-index: 100;
         }
-
-        .navbar.scrolled {
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
+        .header-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .nav-logo {
+        .logo {
             font-size: 24px;
-            font-weight: 900;
-            color: var(--dark-text);
+            font-weight: 800;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        .auth-buttons button { margin-left: 10px; }
+
+        /* --- Main Content --- */
+        main { padding: 40px 0; }
+        .page {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        .nav-menu {
+        /* --- Landing Page --- */
+        #landing-page .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+        #landing-page h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        #landing-page .highlight { color: var(--primary-color); }
+        #landing-page p {
+            font-size: 18px;
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* --- Job Listings Page --- */
+        #job-listings-page .search-filter-bar {
             display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        #job-listings-page .search-filter-bar input,
+        #job-listings-page .search-filter-bar select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .job-card {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .job-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+        }
+        .job-card h3 { margin: 0 0 10px; }
+        .job-card .company-name { font-weight: 600; color: var(--light-text); }
+        .job-card .location { margin-top: 10px; color: #999; }
+        
+        /* --- Job Details Page --- */
+        #job-details-page .job-header h2 { margin-bottom: 5px; }
+        #job-details-page .job-header p { margin: 0 0 20px; font-size: 18px; color: var(--light-text); }
+        #job-details-page .job-section { margin-top: 30px; }
+        #job-details-page .job-section h4 { border-left: 4px solid var(--primary-color); padding-left: 10px; margin-bottom: 15px; }
+        #job-details-page .job-section ul { padding-left: 20px; }
+        #job-details-page .apply-button-wrapper { text-align: center; margin-top: 40px; }
+
+        /* --- Auth Modals --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
             align-items: center;
-            list-style: none;
+            z-index: 200;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 400px;
+        }
+        .modal-content h2 { margin-top: 0; }
+        .modal-content .form-group { margin-bottom: 20px; }
+        .modal-content label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .modal-content button { width: 100%; }
+        
+        /* --- Dashboard --- */
+        #company-dashboard-page .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
             gap: 30px;
         }
-
-        .nav-link {
-            color: var(--dark-text);
-            font-weight: 500;
-        }
-
-        .nav-button {
-            margin-left: 20px;
-        }
-
-        /* === 히어로 섹션 === */
-        .hero-section {
-            padding-top: 120px;
-            padding-bottom: 120px;
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 56px;
-        }
-        .hero-content h1 span {
-            color: var(--primary-blue);
-        }
-
-        .hero-content p {
-            max-width: 600px;
-            margin: 24px auto 32px;
-            font-size: 18px;
-        }
-        
-        .hero-image {
-            margin-top: 60px;
-            width: 100%;
-            max-width: 900px;
-            height: auto;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            background-color: #eee; /* Placeholder background */
-        }
-        
-        /* === 클라이언트 로고 섹션 === */
-        .clients-section {
-            text-align: center;
-            padding-top: 0;
-            padding-bottom: 100px;
-        }
-        
-        .clients-grid {
-            margin-top: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-        }
-        
-        .client-logo {
-            width: 120px;
-            height: 40px;
-            background-color: #ccc; /* Placeholder background */
-            filter: grayscale(100%);
-            opacity: 0.6;
-        }
-
-        /* === 기능/문제점 섹션 === */
-        .features-section {
-            background-color: var(--light-gray);
-            text-align: center;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 60px;
-        }
-        .feature-card {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: left;
-        }
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary-blue);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            /* TODO: 실제 아이콘 SVG 또는 이미지로 교체 */
-        }
-
-        /* === 솔루션 섹션 === */
-        .solution-section {
-            display: flex;
-            align-items: center;
-            gap: 80px;
-        }
-        .solution-content, .solution-image-wrapper {
-            flex: 1;
-        }
-        .solution-image {
-            width: 100%;
-            height: 400px;
-            border-radius: 16px;
-            background-color: #eee;
-        }
-        
-        /* === 고객 후기 (슬라이더) === */
-        .testimonials-section {
-            background-color: var(--light-gray);
-            text-align: center;
-        }
-        
-        .slider-wrapper {
-            position: relative;
-            max-width: 800px;
-            margin: 60px auto 0;
-            overflow: hidden;
-        }
-        
-        .slider-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slide {
-            min-width: 100%;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 16px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 20px;
-            font-weight: 500;
-            line-height: 1.7;
-        }
-        
-        .author-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 30px;
-            gap: 15px;
-        }
-        .author-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ccc;
-        }
-        .author-details p {
-            margin-top: 0;
-            text-align: left;
-        }
-        .author-name {
-            font-weight: 700;
-        }
-        .author-company {
-            font-size: 14px;
-            color: #777;
-        }
-
-        .slider-controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            padding: 0; /* 슬라이드 바깥으로 버튼을 내보내려면 조정 */
-        }
-
-        .slider-button {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+        .dashboard-nav ul { list-style: none; padding: 0; }
+        .dashboard-nav li {
+            padding: 15px;
             cursor: pointer;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            font-weight: 600;
         }
-        .slider-button.prev { left: -25px; }
-        .slider-button.next { right: -25px; }
-
-        /* === CTA 섹션 === */
-        .cta-section {
-            text-align: center;
-            background-color: var(--dark-text);
-            color: #fff;
-            border-radius: 24px;
-            padding: 80px 40px;
+        .dashboard-nav li.active, .dashboard-nav li:hover {
+            background-color: #E9F1FA;
+            color: var(--primary-color);
         }
-        .cta-section h2 {
-            color: #fff;
-        }
-        .cta-section p {
-            color: #ccc;
-            max-width: 600px;
-            margin: 20px auto 40px;
-        }
-
-        /* === 푸터 === */
-        .footer {
-            padding: 60px 0;
-            border-top: 1px solid var(--border-color);
-        }
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .footer-about .footer-logo {
-            font-size: 24px;
-            font-weight: 900;
-            margin-bottom: 16px;
-        }
-        .footer-about p {
-            margin-top: 0;
-            max-width: 300px;
-        }
-        .footer-links {
-            display: flex;
-            gap: 60px;
-        }
-        .footer-links h4 {
-            margin-bottom: 16px;
-        }
-        .footer-links ul {
-            list-style: none;
-        }
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        .footer-links a {
-            color: #555;
-        }
-        
-        .footer-bottom {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-        }
-
-        /* === 스크롤 애니메이션 === */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* === 반응형 디자인 === */
-        @media (max-width: 991px) {
-            h1 { font-size: 40px; }
-            .hero-content h1 { font-size: 48px; }
-            h2 { font-size: 32px; }
-            .features-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .solution-section {
-                flex-direction: column;
-                gap: 40px;
-            }
-        }
-        
-        @media (max-width: 767px) {
-            section { padding: 60px 0; }
-            .nav-menu {
-                display: none; /* 실제 사이트에서는 햄버거 메뉴로 구현해야 함 */
-            }
-            .hero-content h1 { font-size: 36px; }
-            .hero-content p { font-size: 16px; }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .slider-controls {
-                display: none; /* 모바일에서는 터치 스와이프로 대체하는 것이 좋음 */
-            }
-
-            .footer-container {
-                flex-direction: column;
-                gap: 40px;
-            }
-            .footer-links {
-                width: 100%;
-                justify-content: space-between;
-            }
-        }
-
+        .dashboard-content h2 { margin-top: 0; }
+        #post-new-job-form button { margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <!-- ======================= 상단바 ======================= -->
-    <header class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="nav-logo">CrossU</a>
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link">選ばれる理由</a></li>
-                <li><a href="#" class="nav-link">導入事例</a></li>
-                <li><a href="#" class="nav-link">料金プラン</a></li>
-                <li><a href="#" class="nav-link">よくある質問</a></li>
-                <li><a href="#" class="nav-link">お知らせ</a></li>
-                <li><a href="#" class="button nav-button">資料請求</a></li>
-            </ul>
+    <header>
+        <div class="container header-nav">
+            <div class="logo">Connecteam</div>
+            <div id="auth-buttons" class="auth-buttons">
+                <button id="login-btn">로그인</button>
+                <button id="signup-btn" class="btn-primary">회원가입</button>
+            </div>
+            <div id="user-greeting" class="hidden">
+                <span id="user-name"></span>님 환영합니다!
+                <button id="dashboard-btn" class="hidden">기업 대시보드</button>
+                <button id="logout-btn" style="margin-left: 10px;">로그아웃</button>
+            </div>
         </div>
     </header>
 
-    <main>
-        <!-- ======================= 히어로 섹션 ======================= -->
-        <section class="hero-section">
-            <div class="container">
-                <div class="hero-content fade-in">
-                    <h1>理想のキャリアを、<br><span>テクノロジー</span>でデザインする。</h1>
-                    <p>CrossUは、最先端のAI技術とキャリアコンサルタントの知見を融合させ、あなたの可能性を最大限に引き出す次世代キャリア支援サービスです。</p>
-                    <a href="#" class="button button-primary">無料でキャリア相談を予約する</a>
-                </div>
-                <!-- TODO: 실제 이미지로 교체 (900x560 정도의 비율) -->
-                <img src="https://via.placeholder.com/900x560/E8E8E8/BDBDBD?text=Main+Visual" alt="CrossU サービスイメージ" class="hero-image fade-in">
-            </div>
-        </section>
-
-        <!-- ======================= 클라이언트 로고 ======================= -->
-        <section class="clients-section">
-             <div class="container fade-in">
-                <h3>多くの成長企業様にご利用いただいています</h3>
-                 <div class="clients-grid">
-                     <!-- TODO: 실제 클라이언트 로고 이미지로 교체 -->
-                     <div class="client-logo"></div>
-                     <div class="client-logo"></div>
-                     <div class="client-logo"></div>
-                     <div class="client-logo"></div>
-                     <div class="client-logo"></div>
-                 </div>
-            </div>
-        </section>
-
-
-        <!-- ======================= 문제점/기능 섹션 ======================= -->
-        <section class="features-section">
-            <div class="container">
-                <div class="fade-in">
-                    <h2>こんな課題、ありませんか？</h2>
-                    <p>キャリアの岐路で、多くの人が同じ悩みを抱えています。</p>
-                </div>
-                <div class="features-grid">
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon"></div>
-                        <h3>自分の強みがわからない</h3>
-                        <p>これまでの経験をどう活かせばいいのか、客観的な自分の価値が見えにくい。</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon"></div>
-                        <h3>情報が多すぎて選べない</h3>
-                        <p>求人サイトやエージェントは多数あるが、自分に最適な選択肢がどれか判断できない。</p>
-                    </div>
-                    <div class="feature-card fade-in">
-                        <div class="feature-icon"></div>
-                        <h3>将来のキャリアが不安</h3>
-                        <p>今の会社に留まるべきか、新しい挑戦をすべきか。長期的な視点での判断に自信が持てない。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======================= 솔루션 섹션 ======================= -->
-        <section class="solution-section container">
-            <div class="solution-content fade-in">
-                <h2>CrossUが、その課題を<br>すべて解決します。</h2>
-                <p>私たちはデータとヒューマンタッチを組み合わせ、あなただけのキャリアパスを明確に描き出します。AIによる精密な分析と、経験豊富なプロのサポートで、迷いを確信に変えましょう。</p>
-                <a href="#" class="button button-primary" style="margin-top: 20px;">CrossUの仕組みを見る</a>
-            </div>
-            <div class="solution-image-wrapper fade-in">
-                <!-- TODO: 실제 이미지로 교체 (약 500x400) -->
-                <div class="solution-image" style="background-image: url('https://via.placeholder.com/500x400/E8E8E8/BDBDBD?text=Solution+Image'); background-size: cover;"></div>
-            </div>
-        </section>
-        
-        <!-- ======================= 고객 후기 섹션 ======================= -->
-        <section class="testimonials-section">
-            <div class="container">
-                <div class="fade-in">
-                    <h2>導入企業様の声</h2>
-                    <p>CrossUを通じて、多くのビジネスパーソンがキャリアの飛躍を実現しています。</p>
-                </div>
-                
-                <div class="slider-wrapper fade-in">
-                    <div class="slider-track">
-                        <!-- 슬라이드 1 -->
-                        <div class="slide">
-                            <p class="testimonial-text">"AI分析が的確で、自分でも気づかなかった強みを発見できました。面接でのアピールポイントが明確になり、自信を持って転職活動に臨めました。"</p>
-                            <div class="author-info">
-                                <!-- TODO: 실제 인물 사진으로 교체 -->
-                                <div class="author-image"></div>
-                                <div class="author-details">
-                                    <p class="author-name">田中 健太 様</p>
-                                    <p class="author-company">大手IT企業 / マーケター</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 슬라이드 2 -->
-                        <div class="slide">
-                            <p class="testimonial-text">"コンサルタントの方のサポートが手厚く、親身に相談に乗ってくれました。漠然としていたキャリアプランが、具体的な行動計画に変わりました。"</p>
-                            <div class="author-info">
-                                <!-- TODO: 실제 인물 사진으로 교체 -->
-                                <div class="author-image"></div>
-                                <div class="author-details">
-                                    <p class="author-name">鈴木 美咲 様</p>
-                                    <p class="author-company">外資系コンサルティング / アナリスト</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 슬라이드 3 -->
-                        <div class="slide">
-                             <p class="testimonial-text">"異業種への転職で不安でしたが、CrossUの豊富なデータと事例のおかげで、スムーズに移行できました。年収も150万円アップしました。"</p>
-                            <div class="author-info">
-                                <!-- TODO: 실제 인물 사진으로 교체 -->
-                                <div class="author-image"></div>
-                                <div class="author-details">
-                                    <p class="author-name">佐藤 大輔 様</p>
-                                    <p class="author-company">SaaSスタートアップ / 事業開発</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="slider-controls">
-                        <button class="slider-button prev">‹</button>
-                        <button class="slider-button next">›</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======================= CTA 섹션 ======================= -->
-        <section class="container">
-            <div class="cta-section fade-in">
-                <h2>さあ、あなたのキャリアの<br>新しい一歩を踏み出しましょう</h2>
-                <p>まずは無料の資料請求から。CrossUがどのようにあなたのキャリアを変えることができるか、その全貌をご確認ください。</p>
-                <a href="#" class="button button-primary">今すぐ無料で資料請求する</a>
-            </div>
-        </section>
-
+    <main class="container">
+        <!-- 각 페이지는 이 안에 렌더링 됩니다 -->
+        <div id="page-container"></div>
     </main>
 
-    <!-- ======================= 푸터 ======================= -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-about">
-                    <div class="footer-logo">CrossU</div>
-                    <p>理想のキャリアを、テクノロジーでデザインする。株式会社CrossU</p>
+    <!-- 회원가입 모달 -->
+    <div id="signup-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>회원가입</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-type">가입 유형</label>
+                    <select id="signup-type" required>
+                        <option value="talent">인재 (구직자)</option>
+                        <option value="company">기업</option>
+                    </select>
                 </div>
-                <div class="footer-links">
-                    <div>
-                        <h4>サービス</h4>
-                        <ul>
-                            <li><a href="#">選ばれる理由</a></li>
-                            <li><a href="#">導入事例</a></li>
-                            <li><a href="#">料金プラン</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>企業情報</h4>
-                        <ul>
-                            <li><a href="#">会社概要</a></li>
-                            <li><a href="#">お知らせ</a></li>
-                            <li><a href="#">採用情報</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>サポート</h4>
-                        <ul>
-                            <li><a href="#">お問い合わせ</a></li>
-                            <li><a href="#">よくある質問</a></li>
-                            <li><a href="#">プライバシーポリシー</a></li>
-                        </ul>
-                    </div>
+                <div class="form-group">
+                    <label for="signup-email">이메일</label>
+                    <input type="email" id="signup-email" required>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2024 CrossU Inc. All rights reserved.</p>
-            </div>
+                <div class="form-group">
+                    <label for="signup-password">비밀번호</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <button type="submit" class="btn-primary">가입하기</button>
+            </form>
         </div>
-    </footer>
+    </div>
+
+    <!-- 로그인 모달 -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>로그인</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">이메일</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">비밀번호</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">로그인</button>
+            </form>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // 1. 스크롤 시 상단바 스타일 변경
-            const navbar = document.querySelector('.navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
+            // --- 1. 가상 데이터베이스 (In-memory DB) ---
+            const db = {
+                users: [
+                    { id: 1, email: 'talent@connect.com', password: '123', type: 'talent', name: '김인재' },
+                    { id: 2, email: 'company@connect.com', password: '123', type: 'company', name: '커넥트 컴퍼니' }
+                ],
+                jobs: [
+                    { id: 1, companyId: 2, title: '프론트엔드 개발자 (React)', companyName: '커넥트 컴퍼니', location: '서울 강남구', description: 'React와 TypeScript를 사용하여 혁신적인 서비스를 만들어갈 동료를 찾습니다.', responsibilities: ['SPA 개발 및 운영', 'UI/UX 개선', '코드 리뷰'], qualifications: ['React 개발 경험 3년 이상', 'TypeScript, Redux 사용 경험', '원활한 커뮤니케이션 능력'] },
+                    { id: 2, companyId: 2, title: '백엔드 개발자 (Node.js)', companyName: '커넥트 컴퍼니', location: '서울 강남구', description: '확장성 높은 MSA 기반의 백엔드 시스템을 함께 구축합니다.', responsibilities: ['API 서버 개발', 'DB 설계 및 최적화', '인프라 관리 (AWS)'], qualifications: ['Node.js, Express/NestJS 개발 경험', 'RDBMS/NoSQL 사용 경험', '클라우드 환경 경험'] },
+                    { id: 3, companyId: 2, title: 'UI/UX 디자이너', companyName: '커넥트 컴퍼니', location: '부산 해운대구 (원격 가능)', description: '사용자 중심의 직관적이고 아름다운 디자인을 구현합니다.', responsibilities: ['웹/앱 UI 디자인', '프로토타이핑 및 사용성 테스트', '디자인 시스템 구축'], qualifications: ['Figma, Sketch 등 디자인 툴 능숙', 'UX 리서치 경험', '개발자와의 협업 능력'] },
+                ],
+                applications: []
+            };
+
+            let currentUser = null;
+
+            // --- 2. 라우터 및 페이지 렌더링 ---
+            const pageContainer = document.getElementById('page-container');
+
+            const pages = {
+                landing: `
+                    <div id="landing-page" class="page">
+                        <div class="hero">
+                            <h1>당신의 <span class="highlight">가치</span>에 맞는<br>팀을 찾으세요</h1>
+                            <p>커넥팀은 스펙을 넘어, 당신의 성향과 성장 가능성을 보고 최고의 팀을 연결합니다.</p>
+                            <button id="view-jobs-btn" class="btn-secondary">채용공고 둘러보기</button>
+                        </div>
+                    </div>
+                `,
+                jobListings: `
+                    <div id="job-listings-page" class="page">
+                        <h2>전체 채용공고</h2>
+                        <div class="search-filter-bar">
+                            <input type="text" id="search-keyword" placeholder="직무, 회사, 기술 스택으로 검색">
+                            <select id="filter-location">
+                                <option value="">모든 지역</option>
+                                <option value="서울">서울</option>
+                                <option value="부산">부산</option>
+                            </select>
+                        </div>
+                        <div id="job-list-container"></div>
+                    </div>
+                `,
+                jobDetails: (job) => `
+                    <div id="job-details-page" class="page">
+                        <div class="job-header">
+                            <h2>${job.title}</h2>
+                            <p>${job.companyName} - ${job.location}</p>
+                        </div>
+                        <div class="job-section">
+                            <h4>주요업무</h4>
+                            <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
+                        </div>
+                        <div class="job-section">
+                            <h4>자격요건</h4>
+                            <ul>${job.qualifications.map(q => `<li>${q}</li>`).join('')}</ul>
+                        </div>
+                        <div class="job-section">
+                            <h4>회사소개</h4>
+                            <p>${job.description}</p>
+                        </div>
+                        <div class="apply-button-wrapper">
+                            <button class="btn-primary" id="apply-now-btn" data-job-id="${job.id}">즉시 지원하기</button>
+                        </div>
+                    </div>
+                `,
+                companyDashboard: (user) => `
+                    <div id="company-dashboard-page">
+                        <div class="dashboard-grid">
+                            <nav class="dashboard-nav">
+                                <ul>
+                                    <li class="active" data-tab="my-jobs">공고 관리</li>
+                                    <li data-tab="post-job">새 공고 등록</li>
+                                </ul>
+                            </nav>
+                            <div class="dashboard-content page">
+                                <div id="dashboard-tab-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            };
+            
+            const dashboardTabs = {
+                myJobs: (user) => `
+                    <div id="my-job-listings">
+                        <h2>등록한 채용공고</h2>
+                        <!-- 기업이 등록한 공고가 여기에 표시됩니다 -->
+                    </div>
+                `,
+                postJob: `
+                    <div id="post-new-job-form">
+                        <h2>새 공고 등록</h2>
+                        <div class="form-group">
+                            <label>공고 제목</label>
+                            <input type="text" id="new-job-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>근무 지역</label>
+                            <input type="text" id="new-job-location" required>
+                        </div>
+                        <div class="form-group">
+                            <label>주요 업무 (쉼표로 구분)</label>
+                            <textarea id="new-job-res" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>자격 요건 (쉼표로 구분)</label>
+                            <textarea id="new-job-qual" rows="3"></textarea>
+                        </div>
+                         <div class="form-group">
+                            <label>상세 설명</label>
+                            <textarea id="new-job-desc" rows="5"></textarea>
+                        </div>
+                        <button id="submit-new-job-btn" class="btn-primary">공고 등록하기</button>
+                    </div>
+                `
+            };
+
+            function renderPage(pageName, data) {
+                if (typeof pages[pageName] === 'function') {
+                    pageContainer.innerHTML = pages[pageName](data);
                 } else {
-                    navbar.classList.remove('scrolled');
+                    pageContainer.innerHTML = pages[pageName];
                 }
-            });
-
-            // 2. 고객 후기 슬라이더 기능
-            const track = document.querySelector('.slider-track');
-            const slides = Array.from(track.children);
-            const nextButton = document.querySelector('.slider-button.next');
-            const prevButton = document.querySelector('.slider-button.prev');
+                bindPageEvents(pageName);
+            }
             
-            let currentIndex = 0;
-            const slideWidth = slides[0].getBoundingClientRect().width;
-
-            const moveToSlide = (targetIndex) => {
-                track.style.transform = 'translateX(-' + slideWidth * targetIndex + 'px)';
-                currentIndex = targetIndex;
-            };
-
-            nextButton.addEventListener('click', () => {
-                let nextIndex = currentIndex + 1;
-                if (nextIndex >= slides.length) {
-                    nextIndex = 0; // 마지막 슬라이드에서 처음으로
+            function renderDashboardTab(tabName, user) {
+                const contentEl = document.getElementById('dashboard-tab-content');
+                if (typeof dashboardTabs[tabName] === 'function') {
+                     contentEl.innerHTML = dashboardTabs[tabName](user);
+                } else {
+                     contentEl.innerHTML = dashboardTabs[tabName];
                 }
-                moveToSlide(nextIndex);
-            });
+                bindDashboardTabEvents(tabName, user);
+            }
 
-            prevButton.addEventListener('click', () => {
-                let prevIndex = currentIndex - 1;
-                if (prevIndex < 0) {
-                    prevIndex = slides.length - 1; // 첫 슬라이드에서 마지막으로
+            // --- 3. 이벤트 바인딩 ---
+            function bindPageEvents(pageName) {
+                if (pageName === 'landing') {
+                    document.getElementById('view-jobs-btn').addEventListener('click', () => renderPage('jobListings'));
                 }
-                moveToSlide(prevIndex);
-            });
+                if (pageName === 'jobListings') {
+                    renderJobList();
+                    document.getElementById('search-keyword').addEventListener('input', renderJobList);
+                    document.getElementById('filter-location').addEventListener('change', renderJobList);
+                }
+                if (pageName === 'jobDetails') {
+                    document.getElementById('apply-now-btn').addEventListener('click', handleApply);
+                }
+                 if (pageName === 'companyDashboard') {
+                    const user = currentUser;
+                    renderDashboardTab('myJobs', user); // 기본 탭
+                    document.querySelectorAll('.dashboard-nav li').forEach(li => {
+                        li.addEventListener('click', (e) => {
+                            document.querySelector('.dashboard-nav li.active').classList.remove('active');
+                            e.target.classList.add('active');
+                            renderDashboardTab(e.target.dataset.tab, user);
+                        });
+                    });
+                }
+            }
             
-            // 3. 스크롤에 따른 페이드인 애니메이션
-            const fadeElems = document.querySelectorAll('.fade-in');
+            function bindDashboardTabEvents(tabName, user) {
+                if (tabName === 'myJobs') {
+                    renderMyJobList(user.id);
+                }
+                if (tabName === 'postJob') {
+                    document.getElementById('submit-new-job-btn').addEventListener('click', () => handlePostNewJob(user));
+                }
+            }
 
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
+            // --- 4. 핵심 로직 함수들 ---
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // 한 번만 애니메이션 실행
+            // 채용공고 리스트 렌더링
+            function renderJobList() {
+                const container = document.getElementById('job-list-container');
+                const keyword = document.getElementById('search-keyword').value.toLowerCase();
+                const location = document.getElementById('filter-location').value;
+
+                const filteredJobs = db.jobs.filter(job => {
+                    const matchesKeyword = job.title.toLowerCase().includes(keyword) || job.companyName.toLowerCase().includes(keyword);
+                    const matchesLocation = location === "" || job.location.includes(location);
+                    return matchesKeyword && matchesLocation;
+                });
+
+                if (filteredJobs.length === 0) {
+                    container.innerHTML = '<p>조건에 맞는 채용공고가 없습니다.</p>';
+                    return;
+                }
+
+                container.innerHTML = filteredJobs.map(job => `
+                    <div class="job-card" data-job-id="${job.id}">
+                        <h3>${job.title}</h3>
+                        <p class="company-name">${job.companyName}</p>
+                        <p class="location">${job.location}</p>
+                    </div>
+                `).join('');
+
+                // 각 카드에 클릭 이벤트 추가
+                document.querySelectorAll('.job-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const jobId = parseInt(card.dataset.jobId, 10);
+                        const job = db.jobs.find(j => j.id === jobId);
+                        renderPage('jobDetails', job);
+                    });
+                });
+            }
+            
+            // 내 채용공고 렌더링 (대시보드용)
+            function renderMyJobList(companyId) {
+                const container = document.getElementById('my-job-listings');
+                const myJobs = db.jobs.filter(job => job.companyId === companyId);
+                 if (myJobs.length === 0) {
+                    container.innerHTML += '<p>아직 등록한 공고가 없습니다.</p>';
+                    return;
+                }
+                container.innerHTML += myJobs.map(job => `
+                     <div class="job-card">
+                        <h3>${job.title}</h3>
+                        <p class="location">${job.location}</p>
+                    </div>
+                `).join('');
+            }
+
+
+            // 지원하기
+            function handleApply(e) {
+                if (!currentUser) {
+                    alert('로그인이 필요합니다.');
+                    loginModal.classList.remove('hidden');
+                    return;
+                }
+                if (currentUser.type !== 'talent') {
+                    alert('구직자 회원만 지원할 수 있습니다.');
+                    return;
+                }
+                const jobId = parseInt(e.target.dataset.jobId, 10);
+                
+                // 중복 지원 방지
+                const alreadyApplied = db.applications.find(app => app.userId === currentUser.id && app.jobId === jobId);
+                if(alreadyApplied) {
+                    alert('이미 지원한 공고입니다.');
+                    return;
+                }
+
+                db.applications.push({ userId: currentUser.id, jobId: jobId, date: new Date() });
+                alert('지원이 완료되었습니다!');
+                console.log('현재 지원 현황:', db.applications);
+            }
+            
+            // 새 공고 등록
+            function handlePostNewJob(user) {
+                const newJob = {
+                    id: db.jobs.length + 1,
+                    companyId: user.id,
+                    companyName: user.name,
+                    title: document.getElementById('new-job-title').value,
+                    location: document.getElementById('new-job-location').value,
+                    responsibilities: document.getElementById('new-job-res').value.split(',').map(s => s.trim()),
+                    qualifications: document.getElementById('new-job-qual').value.split(',').map(s => s.trim()),
+                    description: document.getElementById('new-job-desc').value,
+                };
+                
+                if(!newJob.title || !newJob.location) {
+                    alert('공고 제목과 근무 지역은 필수입니다.');
+                    return;
+                }
+                
+                db.jobs.push(newJob);
+                alert('새로운 공고가 등록되었습니다.');
+                
+                // 폼 초기화 및 탭 전환
+                document.querySelector('.dashboard-nav li[data-tab="my-jobs"]').click();
+            }
+
+            // --- 5. 인증 및 모달 관련 ---
+            const signupModal = document.getElementById('signup-modal');
+            const loginModal = document.getElementById('login-modal');
+
+            // 모달 열기/닫기
+            document.getElementById('signup-btn').addEventListener('click', () => signupModal.classList.remove('hidden'));
+            document.getElementById('login-btn').addEventListener('click', () => loginModal.classList.remove('hidden'));
+
+            [signupModal, loginModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
                     }
                 });
-            }, observerOptions);
-
-            fadeElems.forEach(elem => {
-                observer.observe(elem);
             });
+
+            // 회원가입 처리
+            document.getElementById('signup-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const type = document.getElementById('signup-type').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+
+                if (db.users.find(u => u.email === email)) {
+                    alert('이미 사용 중인 이메일입니다.');
+                    return;
+                }
+                
+                const newUser = {
+                    id: db.users.length + 1,
+                    email,
+                    password,
+                    type,
+                    name: type === 'talent' ? '새로운 인재' : '새로운 기업' // 임시 이름
+                };
+                db.users.push(newUser);
+                alert('회원가입이 완료되었습니다! 로그인해주세요.');
+                console.log('현재 유저 목록:', db.users);
+                signupModal.classList.add('hidden');
+                loginModal.classList.remove('hidden');
+            });
+            
+            // 로그인 처리
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                const user = db.users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    currentUser = user;
+                    updateAuthState();
+                    loginModal.classList.add('hidden');
+                    alert(`${user.name}님, 환영합니다!`);
+                    renderPage('landing'); // 로그인 후 랜딩 페이지로
+                } else {
+                    alert('이메일 또는 비밀번호가 일치하지 않습니다.');
+                }
+            });
+
+            // 로그아웃 처리
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                currentUser = null;
+                updateAuthState();
+                renderPage('landing');
+            });
+
+            // 로그인 상태 UI 업데이트
+            function updateAuthState() {
+                if (currentUser) {
+                    document.getElementById('auth-buttons').classList.add('hidden');
+                    document.getElementById('user-greeting').classList.remove('hidden');
+                    document.getElementById('user-name').textContent = currentUser.name;
+                    if (currentUser.type === 'company') {
+                        document.getElementById('dashboard-btn').classList.remove('hidden');
+                    } else {
+                        document.getElementById('dashboard-btn').classList.add('hidden');
+                    }
+                } else {
+                    document.getElementById('auth-buttons').classList.remove('hidden');
+                    document.getElementById('user-greeting').classList.add('hidden');
+                }
+            }
+            
+            // 대시보드 버튼
+            document.getElementById('dashboard-btn').addEventListener('click', () => renderPage('companyDashboard'));
+
+            // 로고 클릭
+            document.querySelector('.logo').addEventListener('click', () => renderPage('landing'));
+
+            // --- 초기 페이지 로드 ---
+            renderPage('landing');
         });
     </script>
+
 </body>
 </html>
